@@ -11,7 +11,9 @@ categories_bp = Blueprint('categories', __name__)
 def list_categories():
     categories = Category.query.all()
     schema = CategorySchema(many=True)
-    return jsonify(schema.dump(categories)), 200
+    return jsonify({
+        "categories": schema.dump(categories)
+    }), 200
 
 @categories_bp.get('/categories/<int:category_id>')
 def get_category(category_id):
