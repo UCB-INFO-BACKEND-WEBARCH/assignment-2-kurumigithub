@@ -17,7 +17,10 @@ def list_categories():
 
 @categories_bp.get('/categories/<int:category_id>')
 def get_category(category_id):
-    category = Category.query.get_or_404(category_id)
+    category = Category.get(category_id)
+    if not category:
+        return jsonify({'error': 'Category not found'}), 404
+    
     schema = CategoryDetailSchema()
     return jsonify(schema.dump(category)), 200
 
@@ -34,7 +37,7 @@ def create_category():
     # check for uniqueness
     existing_category = Category.query.filter_by(name=category_data['name']).first()
     if existing_category:
-        return jsonify({'error': 'Category with this name already exists'}), 400
+        return jsonify({"errors": {"name": ["Category with this name already exists."]}}), 400
     
     new_category = Category(
         name=category_data['name'],
@@ -47,11 +50,13 @@ def create_category():
 
 @categories_bp.delete('/categories/<int:category_id>')
 def delete_category(category_id):
-    category = Category.query.get_or_404(category_id)
+    category = Category.get(category_id)
+    if not category:
+        return jsonify({'error': 'Category not found'}), 404
 
     # make sure that response has no tasks
     if len(category.tasks) > 0:
-        return jsonify({'error': 'Cannot delete category with associated tasks'}), 400
+        return jsonify({'error': 'Cannot delete category with existing tasks. Move or delete tasks first.'}), 400
 
     db.session.delete(category)
     db.session.commit()

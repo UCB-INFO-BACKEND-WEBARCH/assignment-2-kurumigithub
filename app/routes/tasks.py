@@ -66,7 +66,7 @@ def create_task():
         task_data = schema.load(data)
     except Exception as e:
         # return jsonify({'error': str(e)}), 400
-        return jsonify({'error': e.messages}), 400
+        return jsonify({'errors': e.messages}), 400
     
     new_task = Task(
         title=task_data['title'],
@@ -94,7 +94,10 @@ def create_task():
 
 @tasks_bp.put('/tasks/<int:task_id>')
 def update_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = Task.query.get(task_id)
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
+    
     data = request.get_json()
 
     # partial=True allows for partial updates, so we don't require all fields to be present
@@ -102,7 +105,8 @@ def update_task(task_id):
     try:
         task_data = schema.load(data)
     except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        # return jsonify({'error': str(e)}), 400
+        return jsonify({'errors': e.messages}), 400
     
     if 'title' in task_data:
         task.title = task_data['title']
@@ -125,7 +129,10 @@ def update_task(task_id):
 
 @tasks_bp.delete('/tasks/<int:task_id>')
 def delete_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = Task.get(task_id)
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
+    
     db.session.delete(task)
     db.session.commit()
     return jsonify({'message': 'Task deleted'}), 200
