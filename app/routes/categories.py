@@ -17,7 +17,7 @@ def list_categories():
 
 @categories_bp.get('/categories/<int:category_id>')
 def get_category(category_id):
-    category = Category.get(category_id)
+    category = Category.query.get(category_id)
     if not category:
         return jsonify({'error': 'Category not found'}), 404
     
@@ -50,7 +50,7 @@ def create_category():
 
 @categories_bp.delete('/categories/<int:category_id>')
 def delete_category(category_id):
-    category = Category.get(category_id)
+    category = Category.query.get(category_id)
     if not category:
         return jsonify({'error': 'Category not found'}), 404
 
