@@ -129,7 +129,7 @@ def update_task(task_id):
 
 @tasks_bp.delete('/tasks/<int:task_id>')
 def delete_task(task_id):
-    task = Task.get(task_id)
+    task = Task.query.get(task_id)
     if not task:
         return jsonify({'error': 'Task not found'}), 404
     
