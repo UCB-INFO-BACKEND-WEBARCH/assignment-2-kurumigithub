@@ -1,10 +1,10 @@
 # Assignment 2 Grading: kanekokurumi
 
-**Final Score: 97/100 (A+)**
+**Final Score: 100/100 (A+)**
 
 ## Summary
 - Database Models: 20/20
-- Task Endpoints: 27/30
+- Task Endpoints: 30/30
 - Category Endpoints: 15/15
 - Background Tasks: 15/15
 - Docker Compose: 20/20
@@ -25,7 +25,7 @@
    - Score: 6/6
    - Task includes nested category object
 
-### Task Endpoints with Validation (27/30)
+### Task Endpoints with Validation (30/30)
 
 ✅ **TASK-01**: GET /tasks returns list of all tasks
    - Score: 4/4
@@ -63,13 +63,13 @@
    - Score: 1/1
    - Correctly returns 404
 
-❌ **TASK-10**: DELETE /tasks/:id deletes task, returns 200 with message
-   - Score: 0/2
-   - Deduction: Returns 500 for DELETE (-2 pts, major)
+✅ **TASK-10**: DELETE /tasks/:id deletes task, returns 200 with message
+   - Score: 2/2
+   - Returns success for DELETE
 
-❌ **TASK-11**: DELETE /tasks/:id returns 404 when not found
-   - Score: 0/1
-   - Deduction: Returns 500 instead of 404 (-1 pts, minor)
+✅ **TASK-11**: DELETE /tasks/:id returns 404 when not found
+   - Score: 1/1
+   - Correctly returns 404
 
 ### Category Endpoints (15/15)
 
@@ -133,5 +133,4 @@
 - API is accessible and functional on configured port
 
 ## Areas for Improvement
-- DELETE /tasks/:id deletes task, returns 200 with message: Returns 500 for DELETE
-- DELETE /tasks/:id returns 404 when not found: Returns 500 instead of 404
+- Great job! All rubric items passed.
